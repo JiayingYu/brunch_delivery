@@ -1,0 +1,41 @@
+.btn-long {
+    width: 300px;
+    border-radius: 0;
+}
+
+.btn {border-radius: 0;}
+
+.btn-add {vertical-align: top;}
+
+.jumbotron {
+    margin-top:20px;
+    border-radius: 0 !important;
+    color:white;
+    background-image: url("brunch-head.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+h1 {text-shadow: 15px, 15px, 7px, #FF00FF}
+
+legend {border: 0;}
+
+.textbox {
+    border-radius: 0;
+    margin-bottom: 10px;
+}
+
+/*#left-col {*/
+    /*margin:10px;*/
+     /*background-color: #F6F6F6;*/
+ /*}*/
+
+#left-col h2 {
+    color: #d2a91c;
+}
+
+.form-inline {vertical-align: top;}
+
+label {font-weight: normal;}
+
+.dish a:hover {text-decoration: none}
