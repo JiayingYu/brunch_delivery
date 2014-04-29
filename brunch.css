@@ -1,8 +1,3 @@
-.btn-long {
-    width: 300px;
-    border-radius: 0;
-}
-
 .btn {border-radius: 0;}
 
 .btn-add {vertical-align: top;}
@@ -58,3 +53,12 @@ label {font-weight: normal;}
 
 #checkoutTable td, #checkoutTable th {border-top: 0;}
 
+#form {
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+#checkoutTable {
+    margin-left: 40px;
+    margin-right: 40px;
+}

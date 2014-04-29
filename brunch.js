@@ -94,6 +94,10 @@ $(document).ready(function() {
     $("#restart").click(function() {
         $("#delForm")[0].reset();
         $(".dish").find(".textbox").val(0);
+        del = null;
+        address = "";
+        cardType = "";
+        comments = "";
         for (var key in dishes) {
             dishes[key].qty = 0;
         }
