@@ -4,6 +4,7 @@
 
 .jumbotron {
     margin-top:20px;
+    margin-bottom: 5px;
     border-radius: 0 !important;
     color:white;
     background-image: url("brunch-head.jpg");
@@ -29,14 +30,11 @@ legend {border: 0;}
 
 #menu {
     background-color: #F1F1F1;
-    margin: 5px;
-    /*padding-left: 20px;*/
-    /*padding-right: 20px;*/
-}
-
-.menu-col {
-    padding-right: 30px;
-    padding-left: 30px;
+    margin-top:20px;
+    margin-right:20px;
+    padding-left: 70px;
+    padding-top: 15px;
+    padding-bottom: 20px;
 }
 
 .form-inline {vertical-align: top;}
@@ -56,9 +54,11 @@ label {font-weight: normal;}
 #form {
     margin-left: 40px;
     margin-right: 40px;
+    margin-top:10px;
 }
 
 #checkoutTable {
     margin-left: 40px;
     margin-right: 40px;
 }
+

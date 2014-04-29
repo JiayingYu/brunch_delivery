@@ -124,9 +124,6 @@ function submitForm() {
 function total() {
     var totalPrice = 0;
     var checkoutList = "<tr><th>Shopping Cart</th></tr>";
-    var minusBtn = "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-minus'></span></button>";
-    var plusBtn = "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-plus'></span></button>";
-
     submitForm();
 
     //validate customer information
@@ -140,7 +137,6 @@ function total() {
 
                 checkoutList += "<tr><td colspan='3'>" + dishes[key].name + "</td></tr>" +
                                 "<tr><td>$" + dishes[key].price +"</td><td>x " + dishes[key].qty +
-                                "<div class='btn-group'>" + plusBtn + minusBtn + "</div></td>" +
                                 "<td>= $" + dishes[key].subtotal().toFixed(2) + "</td></tr>";
             }
         }
