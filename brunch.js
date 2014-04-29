@@ -1,13 +1,15 @@
 /**
  * Created by jiayingyu on 4/19/14.
+ * how to improve:
+ * 1. validate customer info in submit()
+ * 2. validate customer entry of zip code
+ * 3. customer has to fill out all 3 fields of address to be validated
  */
 
 var del = null;
 var address = "";
 var cardType = "";
 var comments = "";
-var totalPrice = 0;
-var receipt = "";
 
 function Dish(name, price, qty) {
     this.name = name;
@@ -15,7 +17,8 @@ function Dish(name, price, qty) {
     this.qty = qty;
 
     Dish.prototype.subtotal = function() {
-        return this.price * this.qty;
+        var sub = this.price * this.qty;
+        return precise_round(sub,2);
     }
 }
 
@@ -43,23 +46,25 @@ $(document).ready(function() {
     });
 
     $(".btn-add").click(function() { //add button clicked
-        $(this).parent().slideToggle();
-        var qtyStr = $(this).parent().find(".textbox").val(); //get qty value from inputbox
-        var qty = parseInt(qtyStr); //parse the value of the input box into integer
         var dishN = $(this).attr("id") //get the key value for the dish object
-        var newQty = dishes[dishN].qty += qty; //add the qty to the object
-//        alert(newQty + "\n" + dishes[dishN].subtotal());
-        if (!receiptList.contains(dishes[dishN])) {receiptList.add(dishes[dishN]);}
+        var qtyStr = $(this).parent().find(".textbox").val(); //get qty value from inputbox
+        var qty = Number(qtyStr); //parse the value of the input box into number
+
+        if (qty <= 0 || qty % 1 != 0) {
+            alert("Please enter a positive integer");
+        }
+        else {
+            dishes[dishN].qty += qty; //add the qty to the object
+            $(this).parent().slideToggle();
+        }
     });
 
     $("#del").change(function() {
         del = true;
-//        alert(del);
     });
 
     $("#pickup").change(function() {
         del = false;
-//        alert(del);
     });
 
     $("#visa").change(function() {
@@ -68,7 +73,7 @@ $(document).ready(function() {
     });
 
     $("#master").change(function() {
-        cardType = "Master";
+        cardType = "Master Card";
 //        alert(cardType);
     });
 
@@ -79,19 +84,16 @@ $(document).ready(function() {
     });
 
     $("#total").click(function() {
-        submitForm();
         total();
     });
 
     $("#checkout").click(function() {
-        submitForm();
         calReceipt();
-        $("#totalOutput").text(receipt);
     });
 
     $("#restart").click(function() {
         $("#delForm")[0].reset();
-        $(".dish").find(".textbox").val("");
+        $(".dish").find(".textbox").val(0);
         for (var key in dishes) {
             dishes[key].qty = 0;
         }
@@ -100,40 +102,101 @@ $(document).ready(function() {
 
 //save the address and comment
 function submitForm() {
-    address = $("#addStr").val() + "\n" + $("#addCity").val() + ", NJ\n" + $("#addZip").val();
-//    alert(address);
-    comments = $("#comments").val();
-//    alert(comments);
+    if ($("#addStr").val() == "" && $("#addCity").val() == "" && $("#addZip").val() == "") {
+        address = "";
+    }
+    else {
+        address = $("#addStr").val() + ", " + $("#addCity").val() + ", NJ " + $("#addZip").val();
+    }
 
-    //validate cumstomer information
-    if (del == null){alert("Please select a deliver type.");}
-    else if (del == true && address == "") {alert("Please fill in your address.");}
-    if (cardType == "") {alert("Please select a card type");}
+    comments = $("#comments").val();
+
+    //validate customer information use error handling, cast errors here, instead of include the following code in total() and calReceipt() twice
+//    if (del == null){alert("Please select a deliver type.");}
+//    else if (del == true && address == "") {alert("Please fill in your address.");}
+//    if (cardType == "") {alert("Please select a card type");}
 }
 
 function total() {
-    if (del == true) {totalPrice = 5;}
-    else {totalPrice = 0;}
-    for (var key in dishes) {
-        totalPrice += dishes[key].subtotal();
+    var totalPrice = 0;
+    var checkoutList = "<tr><th>Shopping Cart</th></tr>";
+    var minusBtn = "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-minus'></span></button>";
+    var plusBtn = "<button type='button' class='btn btn-default btn-xs'><span class='glyphicon glyphicon-plus'></span></button>";
+
+    submitForm();
+
+    //validate customer information
+    if (del == null){alert("Please select a deliver type.");}
+    else if (del == true && address == "") {alert("Please fill in your address.");}
+    else if (cardType == "") {alert("Please select a card type");}
+    else {
+        for (var key in dishes) {
+            if (dishes[key].qty != 0 ) {
+                totalPrice += dishes[key].subtotal();
+
+                checkoutList += "<tr><td colspan='3'>" + dishes[key].name + "</td></tr>" +
+                                "<tr><td>$" + dishes[key].price +"</td><td>x " + dishes[key].qty +
+                                "<div class='btn-group'>" + plusBtn + minusBtn + "</div></td>" +
+                                "<td>= $" + dishes[key].subtotal().toFixed(2) + "</td></tr>";
+            }
+        }
+
+        if (del == true) {
+            totalPrice += 5;
+            checkoutList += "<tr><td colspan='2'>Delivery Service</td><td>= $5.00</td></tr>"
+        }
+
+        checkoutList += "<tr><td colspan='2'>Total</td><td>= $" + totalPrice.toFixed(2) + "</td></tr>";
+        $("#checkoutTable").html(checkoutList);
     }
-    alert("total() function called. Total amount is " + totalPrice);
 }
 
 
-
 function calReceipt() {
-    if (del == true) {totalPrice = 5;}
-    else {totalPrice = 0;}
+    submitForm();
 
-    for (var key in dishes) {
-        totalPrice += dishes[key].subtotal();
-        if (dishes[key].qty != 0) {
-            receipt += dishes[key].name + "\n" + dishes[key].price + " * " + dishes[key].qty + " = " + dishes[key].subtotal() + "\n";
+    var totalPrice = 0;
+    var receiptList = "<tr><th>Item</th><th>Price</th><th>Qty</th><th>Amount</th></th>";
+    var delType;
+    var delPrice;
+
+    //validate customer information
+    if (del == null){alert("Please select a deliver type.");}
+    else if (del == true && address == "") {alert("Please fill in your address.");}
+    else if (cardType == "") {alert("Please select a card type");}
+    else {
+        $("#coverPage").hide();
+        for (var key in dishes) {
+            if (dishes[key].qty != 0) {
+                totalPrice += dishes[key].subtotal();
+
+                receiptList += "<tr><td>" + dishes[key].name + "</td><td class='price'>$" + dishes[key].price + "</td><td>" +
+                    dishes[key].qty + "</td><td class='price'>$" + dishes[key].subtotal().toFixed(2) + "</td></tr>";
+            }
         }
-    }
 
-    alert("calReceipt() called.\n" + receipt);
+        if (del == true) {
+            totalPrice += 5;
+            delType = "Delivery";
+            delPrice = 5;
+        }
+        else {
+            delType = "Pick up in store";
+            delPrice = 0;
+        }
+
+        receiptList += "<tr><td>" + delType + "</td><td colspan='3' class='price'>$" + delPrice.toFixed(2) + "</td></tr>" +
+            "<tr><td colspan='3'>Total</td><td class='price'>$" + totalPrice.toFixed(2) + "</td></tr>" +
+            "<tr><td>Card Type</td><td colspan='3'>" + cardType + "</td></tr>" +
+            "<tr><td>Address</td><td colspan='3'>" + address + "</td></tr>" +
+            "<tr><td>Comments</td><td colspan='3'>" + comments + "</td></tr>";
+
+        $("#receiptTable").append(receiptList);
+    }
+}
+
+function precise_round(num,decimals) {
+    return Math.round(num * Math.pow(10, decimals)) / Math.pow(10, decimals);
 }
 
 

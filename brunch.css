@@ -16,8 +16,6 @@
     background-size: 100%;
 }
 
-h1 {text-shadow: 15px, 15px, 7px, #FF00FF}
-
 legend {border: 0;}
 
 .textbox {
@@ -30,8 +28,20 @@ legend {border: 0;}
      /*background-color: #F6F6F6;*/
  /*}*/
 
-#left-col h2 {
+#menu h2 {
     color: #d2a91c;
+}
+
+#menu {
+    background-color: #F1F1F1;
+    margin: 5px;
+    /*padding-left: 20px;*/
+    /*padding-right: 20px;*/
+}
+
+.menu-col {
+    padding-right: 30px;
+    padding-left: 30px;
 }
 
 .form-inline {vertical-align: top;}
@@ -39,3 +49,12 @@ legend {border: 0;}
 label {font-weight: normal;}
 
 .dish a:hover {text-decoration: none}
+
+.btn-group {margin-left:10px;}
+
+#receiptTable td, #receiptTable th {
+    border-top: 0;
+}
+
+#checkoutTable td, #checkoutTable th {border-top: 0;}
+

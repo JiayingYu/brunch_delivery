@@ -9,16 +9,14 @@
     <script src="brunch.js"></script>
 </head>
 <body>
-<div class="container">
+<div class="container" id="coverPage">
     <div class="jumbotron">
         <h1>Newport Brunch</h1>
         <p>Home delivery service</p>
     </div>
 
-
-    <div class="row">
-        <div class="col-md-8">
-        <div id="left-col">
+    <div class="row" id="menu">
+        <div class="col-md-6 menu-col">
             <h2>Salad</h2>
             <div class="dish">
                 <a href="###" class="dish-name"><h4>Grilled Chicken Caesar Salad <small>[11.95]</small></h4></a>
@@ -53,6 +51,39 @@
             </div>
             <P>&nbsp;</P>
 
+            <h2>Waffles</h2>
+            <div class="dish">
+                <a href="###" class="dish-name"><h4>The Original <small>[8.95]</small></h4></a>
+                <p>plain greatness</p>
+                <form class="form-inline slide-down">
+                    <label>Qty: <input type="text" class="textbox form-control" size="2"></label>
+                    <input type="button" class="btn btn-success btn-add" value="Add to cart" id="w1">
+                </form>
+            </div>
+            <P>&nbsp;</P>
+
+            <div class="dish">
+                <a href="###" class="dish-name"><h4>Bacon Waffle <small>[12.45]</small></h4></a>
+                <p>cherry bourbon maple syrup, coffee whipped cream, vanilla ice cream, bacon</p>
+                <form class="form-inline slide-down">
+                    <label>Qty: <input type="text" class="textbox form-control" size="2"></label>
+                    <input type="button" class="btn btn-success btn-add" value="Add to cart" id="w2">
+                </form>
+            </div>
+            <P>&nbsp;</P>
+
+            <div class="dish">
+                <a href="###" class="dish-name"><h4>Roy's Chicken and Waffle <small>[15.75]</small></h4></a>
+                <p>fresh waffle, fried chicken fingers, syrup & honey</p>
+                <form class="form-inline slide-down">
+                    <label>Qty: <input type="text" class="textbox form-control" size="2"></label>
+                    <input type="button" class="btn btn-success btn-add" value="Add to cart" id="w3">
+                </form>
+            </div>
+            <P>&nbsp;</P>
+        </div>
+
+        <div class="col-md-6 menu-col">
             <h2>Plates</h2>
             <div class="dish">
                 <a href="###" class="dish-name"><h4>Classic Benedict <small>[11.95]</small></h4></a>
@@ -96,37 +127,6 @@
             </div>
             <P>&nbsp;</P>
 
-            <h2>Waffles</h2>
-            <div class="dish">
-                <a href="###" class="dish-name"><h4>The Original <small>[8.95]</small></h4></a>
-                <p>plain greatness</p>
-                <form class="form-inline slide-down">
-                    <label>Qty: <input type="text" class="textbox form-control" size="2"></label>
-                    <input type="button" class="btn btn-success btn-add" value="Add to cart" id="w1">
-                </form>
-            </div>
-            <P>&nbsp;</P>
-
-            <div class="dish">
-                <a href="###" class="dish-name"><h4>Bacon Waffle <small>[12.45]</small></h4></a>
-                <p>cherry bourbon maple syrup, coffee whipped cream, vanilla ice cream, bacon</p>
-                <form class="form-inline slide-down">
-                    <label>Qty: <input type="text" class="textbox form-control" size="2"></label>
-                    <input type="button" class="btn btn-success btn-add" value="Add to cart" id="w2">
-                </form>
-            </div>
-            <P>&nbsp;</P>
-
-            <div class="dish">
-                <a href="###" class="dish-name"><h4>Roy's Chicken and Waffle <small>[15.75]</small></h4></a>
-                <p>fresh waffle, fried chicken fingers, syrup & honey</p>
-                <form class="form-inline slide-down">
-                    <label>Qty: <input type="text" class="textbox form-control" size="2"></label>
-                    <input type="button" class="btn btn-success btn-add" value="Add to cart" id="w3">
-                </form>
-            </div>
-            <P>&nbsp;</P>
-
             <h2>Drinks</h2>
             <div class="dish">
                 <a href="###" class="dish-name"><h4>Tropical Mimosa <small>[5.95]</small></h4></a>
@@ -157,11 +157,11 @@
                 </form>
             </div>
             <P>&nbsp;</P>
-
         </div>
-        </div>
+    </div>
 
-        <div class="col-md-4">
+    <div class="row" id="form">
+        <div class="col-md-6">
             <p>&nbsp;</p>
             <form id="delForm">
             <fieldset>
@@ -197,18 +197,28 @@
                 <textarea class="form-control textbox" id="comments" rows="3" cols="45" placeholder="additional information"></textarea>
             </fieldset>
             </form>
-
             <p>&nbsp;</p>
             <p><button type="button" class="btn btn-info btn-long" id="checkout">Checkout</button></p>
             <p><button type="button" class="btn btn-success btn-long" id="total">Total amount due</button></p>
             <p><button type="reset" class="btn btn-danger btn-long" id="restart">Restart</button></p>
-
-            <div id="totalOutput">
-
-            </div>
         </div>
 
+        <div class="col-md-6">
+            <table class="table" id="checkoutTable">
+
+            </table>
+        </div>
     </div>
+</div>
+
+<div class="container" id="receipt">
+    <p>&nbsp;</p>
+    <table class="table" id="receiptTable">
+        <col width="80">
+        <col width="20">
+        <col width="20">
+        <col width="20">
+    </table>
 </div>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 </body>
